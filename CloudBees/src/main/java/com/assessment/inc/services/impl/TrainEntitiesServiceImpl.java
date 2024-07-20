@@ -50,7 +50,7 @@ public class TrainEntitiesServiceImpl implements TrainEntitiesService {
     @Transactional
     public void deleteTrainById(String trainId) {
         inventoryService.deleteInventory(trainId);
-        trainDetailsService.deleteTrainDetails(trainId);
+        trainDetailsService.deleteByTrainId(trainId);
     }
 
 

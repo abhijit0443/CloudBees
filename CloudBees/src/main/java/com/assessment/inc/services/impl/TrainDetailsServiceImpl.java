@@ -45,9 +45,9 @@ public class TrainDetailsServiceImpl implements TrainDetailsService {
 
 
     @Override
-    public TrainDetails getTrainById(String trainId) {
-        Optional<TrainDetails> optionalTrainDetails = trainDetailsRepository.findById(trainId);
-        return optionalTrainDetails.orElse(null); // Handle if trainDetails is not found
+    public List<TrainDetails> findByTrainId(String trainId) {
+        List<TrainDetails> optionalTrainDetails = trainDetailsRepository.findByTrainId(trainId);
+        return optionalTrainDetails;
     }
 
 
@@ -56,9 +56,16 @@ public class TrainDetailsServiceImpl implements TrainDetailsService {
         LocalDate currentDate = LocalDate.now();
         return trainDetailsRepository.findByFromLocationAndToLocationAndDateAfter(fromLocation, toLocation, currentDate);
     }
+
+
     @Override
-    public void deleteTrainDetails(String trainId) {
-        trainDetailsRepository.deleteById(trainId);
+    public void deleteByTrainId(String trainId) {
+        trainDetailsRepository.deleteByTrainId(trainId);
+    }
+
+    @Override
+    public TrainDetails findByTrainIdAndDate(String trainId, LocalDate date) {
+        return trainDetailsRepository.findByTrainIdAndDate(trainId,date);
     }
 
     // Add more methods as needed for your application

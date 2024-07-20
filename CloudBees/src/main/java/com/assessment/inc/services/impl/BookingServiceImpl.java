@@ -36,39 +36,39 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public TrainDetails getTrainById(String trainId) {
-        TrainDetails trainDetail = trainDetailsService.getTrainById(trainId);
+    public List<TrainDetails> findByTrainId(String trainId) {
+        List<TrainDetails> trainDetail = trainDetailsService.findByTrainId(trainId);
         return trainDetail;
     }
 
     @Override
     @Transactional
     public void cancelTicket(String ticketId) throws TicketCancellationException {
-        Optional<Ticket> optionalTicket = bookingRepository.findById(ticketId);
+        Optional<Ticket> optionalTicket = bookingRepository.findByTicketId(ticketId);
 
         if (!optionalTicket.isPresent()) {
             throw new TicketCancellationException("Ticket with ID " + ticketId + " not found");
         }
         Ticket ticket = optionalTicket.get();
-        Inventory inventory = inventoryService.getInventoryById(ticket.getTrainId());
-        TrainDetails trainDetail = trainDetailsService.getTrainById(ticket.getTrainId());
+        Inventory inventory = inventoryService.findByTrainIdAndDate(ticket.getTrainId(),ticket.getDate());
+        TrainDetails trainDetail = trainDetailsService.findByTrainIdAndDate(ticket.getTrainId(),ticket.getDate());
         bookingRepository.delete(ticket);
 
 
         inventory.setAvaliableSeats(inventory.getAvaliableSeats() + 1);
         inventoryService.save(inventory);
 
-        trainDetail.setAvaliableSeats(trainDetail.getAvaliableSeats() + 1);
+        trainDetail.setAvailableSeats(trainDetail.getAvailableSeats() + 1);
         trainDetailsService.save(trainDetail);
     }
 
     @Override
     @Transactional
-    public Ticket bookTicket(String fromLocation, String toLocation, String trainId, String firstName, String lastName, String emailAddress) throws ExceededCapacityException {
+    public Ticket bookTicket(String fromLocation, String toLocation, String trainId,   LocalDate date,String firstName, String lastName, String emailAddress) throws ExceededCapacityException {
 
-        // Fetch train details
-        Inventory inventory = inventoryService.getInventoryById(trainId);
-        TrainDetails trainDetail = trainDetailsService.getTrainById(trainId);
+
+        Inventory inventory = inventoryService.findByTrainIdAndDate(trainId,date);
+        TrainDetails trainDetail = trainDetailsService.findByTrainIdAndDate(trainId,date);
         if (inventory == null) {
             throw new IllegalArgumentException("Train with ID " + trainId + " not found");
         }
@@ -99,7 +99,7 @@ public class BookingServiceImpl implements BookingService {
         inventory.setAvaliableSeats(inventory.getAvaliableSeats() - 1);
         inventoryService.save(inventory);
 
-        trainDetail.setAvaliableSeats(trainDetail.getAvaliableSeats() - 1);
+        trainDetail.setAvailableSeats(trainDetail.getAvailableSeats() - 1);
         trainDetailsService.save(trainDetail);
 
         return ticket;
@@ -112,18 +112,11 @@ public class BookingServiceImpl implements BookingService {
         int nextAvailableSeatNumber = inventory.getSeats() - inventory.getAvaliableSeats()+ 1;
         return nextAvailableSeatNumber;
     }
-    private boolean isCapacityExceeded(String trainId) {
-        Inventory inventorydetails=  inventoryService.getInventoryById(trainId);
-        int avaliableSeats=inventorydetails.getAvaliableSeats();
-        if(avaliableSeats<1){
-            return true;
-        }
-        return false;
-    }
+
 
     @Override
     public Ticket getTicket(String ticketId) {
-        Optional<Ticket> optionalTicket = bookingRepository.findById(ticketId);
+        Optional<Ticket> optionalTicket = bookingRepository.findByTicketId(ticketId);
         return optionalTicket.orElse(null);
     }
 

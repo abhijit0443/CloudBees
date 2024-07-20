@@ -1,13 +1,8 @@
 package com.assessment.inc.services.impl;
 
-import com.assessment.inc.dto.TrainDetailsDto;
 import com.assessment.inc.dto.TrainEntityDto;
-import com.assessment.inc.dto.TrainInventoryDto;
 import com.assessment.inc.entites.Inventory;
-import com.assessment.inc.entites.Ticket;
 import com.assessment.inc.entites.TrainDetails;
-
-import java.time.LocalDate;
 
 public class TrainMappingService {
 
@@ -19,7 +14,7 @@ public class TrainMappingService {
         trainDetailsDto.setFromLocation(trainEntityDto.getFromLocation());
         trainDetailsDto.setToLocation(trainEntityDto.getToLocation());
         trainDetailsDto.setFare(trainEntityDto.getFare());
-        trainDetailsDto.setAvaliableSeats(trainEntityDto.getSeats());
+        trainDetailsDto.setAvailableSeats(trainEntityDto.getSeats());
         return trainDetailsDto;
 
     }

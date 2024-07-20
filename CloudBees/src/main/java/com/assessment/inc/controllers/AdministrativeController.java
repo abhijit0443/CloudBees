@@ -45,7 +45,7 @@ public class AdministrativeController {
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Database error: ");
         } catch (Exception e) {
-            // Handle other unexpected errors
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error: ");
         }
     }
@@ -65,8 +65,8 @@ public class AdministrativeController {
         }
     }
     @GetMapping("/{trainId}")
-    public TrainDetails getTrainById(@PathVariable String trainId) {
-        return trainDetailsService.getTrainById(trainId);
+    public List<TrainDetails> findByTrainId(@PathVariable String trainId) {
+        return trainDetailsService.findByTrainId(trainId);
 
     }
 

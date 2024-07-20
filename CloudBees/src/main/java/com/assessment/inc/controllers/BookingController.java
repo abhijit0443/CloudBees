@@ -8,8 +8,10 @@ import com.assessment.inc.exceptions.TicketCancellationException;
 import com.assessment.inc.services.BookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/trains/")
@@ -23,16 +25,12 @@ public class BookingController {
 
 
     @GetMapping("/trainById/{trainId}")
-    public TrainDetails getTrainById(@PathVariable String trainId) {
-        return bookingService.getTrainById(trainId);
+    public List<TrainDetails> findByTrainId(@PathVariable String trainId) {
+        return bookingService.findByTrainId(trainId);
 
     }
 
 
-    /*Create API where you can submit a purchase for a ticket
-    * From, To, User , price paid.
-    User should include first and last name, email address*/
-   // @PreAuthorize("hasAuthority('SCOPE_internal') || hasAuthority('Admin')")
     @PostMapping("/book")
     public ResponseEntity<Ticket> bookTicket(@RequestBody BookingRequest request) throws ExceededCapacityException {
         String trainId = request.getTrainId();
@@ -40,8 +38,9 @@ public class BookingController {
         String toLocation = request.getToLocation();
         String firstName = request.getFirstName();
         String lastName = request.getLastName();
+        LocalDate date=request.getDate();
         String emailAddress = request.getEmailAddress();
-    return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.bookTicket(fromLocation, toLocation, trainId,firstName, lastName, emailAddress));
+    return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.bookTicket(fromLocation, toLocation, trainId,date,firstName, lastName, emailAddress));
 
     }
 

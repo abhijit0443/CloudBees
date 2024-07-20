@@ -1,6 +1,7 @@
 package com.assessment.inc.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TrainDetailsDto {
     private String trainId;
@@ -25,13 +26,7 @@ public class TrainDetailsDto {
         this.trainName = trainName;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 
     public String getFromLocation() {
         return fromLocation;
@@ -58,4 +53,11 @@ public class TrainDetailsDto {
     }
 
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }

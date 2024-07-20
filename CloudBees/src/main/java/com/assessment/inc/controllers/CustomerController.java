@@ -1,7 +1,7 @@
 package com.assessment.inc.controllers;
 
-import com.assessment.inc.entites.Customer;
-import com.assessment.inc.services.CustomerService;
+import com.assessment.inc.entites.User;
+import com.assessment.inc.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.List;
     public class CustomerController {
 
         @Autowired
-        private CustomerService customerService;
+        private UserService userService;
 
         private Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
@@ -30,11 +30,11 @@ import java.util.List;
 
 
 
-    @PostMapping("/customers")
-    public ResponseEntity<?> addCustomers(@RequestBody List<Customer> customers) {
+    @PostMapping("/createUsers")
+    public ResponseEntity<?> addCustomers(@RequestBody List<User> users) {
         try {
-            List<Customer> customerAdded = customerService.saveCustomers(customers);
-            return ResponseEntity.status(HttpStatus.CREATED).body(customerAdded);
+            List<User> userAdded = userService.saveCustomers(users);
+            return ResponseEntity.status(HttpStatus.CREATED).body(userAdded);
         } catch (ValidationException e) {
             // Handle validation errors
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Validation error: ");
@@ -48,15 +48,15 @@ import java.util.List;
     }
     /*An API that shows the details of the receipt for the user*/
     @GetMapping("/customers/{userId}")
-    public Customer getReceiptDetails(@PathVariable String userId) {
-        return customerService.getCustomer(userId);
+    public User getReceiptDetails(@PathVariable String userId) {
+        return userService.getCustomer(userId);
     }
 
 
     @DeleteMapping("/customers/remove/{userId}")
     public ResponseEntity<?> removeUser(@PathVariable String userId) {
         try {
-            customerService.removeUser(userId);
+            userService.removeUser(userId);
             return ResponseEntity.ok("User with ID " + userId + " removed successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to remove user: ");

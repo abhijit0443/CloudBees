@@ -3,6 +3,7 @@ package com.assessment.inc.services;
 import com.assessment.inc.entites.Inventory;
 import com.assessment.inc.entites.TrainDetails;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TrainDetailsService {
@@ -13,8 +14,9 @@ public interface TrainDetailsService {
     List<TrainDetails> getAllTrainDetails();
     List<TrainDetails> getByFromLocationAndToLocation(String fromLocation, String toLocation) ;
 
-    TrainDetails getTrainById(String trainId);
+    List<TrainDetails> findByTrainId(String trainId);
 
-    void deleteTrainDetails(String trainId);
+    void deleteByTrainId(String trainId);
 
+    TrainDetails findByTrainIdAndDate(String trainId, LocalDate date);
 }

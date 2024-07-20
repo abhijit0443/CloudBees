@@ -2,6 +2,7 @@ package com.assessment.inc.services;
 
 import com.assessment.inc.entites.Inventory;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,9 @@ public interface InventoryService {
 
     List<Inventory> getByFromLocationAndToLocation(String fromLocation, String toLocation) ;
 
-    Inventory getInventoryById(String trainId);
+    List<Inventory> findByTrainId(String trainId);
 
     void deleteInventory(String trainId);
+
+    Inventory findByTrainIdAndDate(String trainId, LocalDate date);
 }

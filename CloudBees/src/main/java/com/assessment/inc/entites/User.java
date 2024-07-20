@@ -13,9 +13,9 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name ="CUSTOMER")
+@Table(name ="users")
 public class
-Customer{
+User {
     @Id
     private String userId;
     private String FirstName;

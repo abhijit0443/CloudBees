@@ -14,8 +14,6 @@ import java.util.List;
 
 @Service
 public class InventoryServiceImpl implements InventoryService {
-
-
     private InventoryRepository inventoryRepository;
     public InventoryServiceImpl(InventoryRepository inventoryRepository){
         this.inventoryRepository= inventoryRepository;
@@ -48,12 +46,19 @@ public class InventoryServiceImpl implements InventoryService {
         return inventoryRepository.findAll();
     }
     @Override
-    public Inventory getInventoryById(String trainId) {
-        return inventoryRepository.findById(trainId).orElseThrow(() -> new ResourceNotFoundException("Train with given trainId  not found  for :"+trainId));
+    public  List<Inventory> findByTrainId(String trainId) {
+        return inventoryRepository.findByTrainId(trainId);
 
     }
+
+
     @Override
     public void deleteInventory(String trainId) {
-        inventoryRepository.deleteById(trainId);
+        inventoryRepository.deleteByTrainId(trainId);
+    }
+
+    @Override
+    public Inventory findByTrainIdAndDate(String trainId, LocalDate date) {
+        return inventoryRepository.findByTrainIdAndDate(trainId,date);
     }
 }
