@@ -11,7 +11,18 @@ public class TrainEntityDto {
     private String toLocation;
     private Integer seats;
     private Double fare;
+    public TrainEntityDto() {
+    }
 
+    public TrainEntityDto(String trainId, String trainName, LocalDate date, String fromLocation, String toLocation, Integer seats, Double fare) {
+        this.trainId = trainId;
+        this.trainName = trainName;
+        this.date = date;
+        this.fromLocation = fromLocation;
+        this.toLocation = toLocation;
+        this.seats = seats;
+        this.fare = fare;
+    }
     public String getTrainId() {
         return trainId;
     }

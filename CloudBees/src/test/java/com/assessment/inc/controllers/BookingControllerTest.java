@@ -8,7 +8,6 @@ import com.assessment.inc.exceptions.ExceededCapacityException;
 import com.assessment.inc.exceptions.TicketCancellationException;
 import com.assessment.inc.services.BookingService;
 import com.assessment.inc.util.Constants;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

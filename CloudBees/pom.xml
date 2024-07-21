@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
   <groupId>com.assessment.inc</groupId>
 	<artifactId>CloudBees </artifactId>
@@ -15,7 +15,6 @@
 	<description>CloudBees Technical Assessment </description>
     <properties>
         <java.version>1.8</java.version>
-        <!--<spring-cloud.version>2021.0.5</spring-cloud.version>-->
     </properties>
 
     <dependencies>
@@ -44,18 +43,11 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-
         </dependency>
-
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <scope>runtime</scope>
-
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -74,13 +66,11 @@
             </exclusions>
         </dependency>
 
-        <!-- Spring Boot Starter Test for JUnit 4 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
             <exclusions>
-                <!-- Exclude JUnit 5 and use JUnit 4 -->
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
@@ -88,7 +78,6 @@
             </exclusions>
         </dependency>
 
-        <!-- JUnit 4 -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

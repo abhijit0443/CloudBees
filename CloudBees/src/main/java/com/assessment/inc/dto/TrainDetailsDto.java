@@ -10,6 +10,8 @@ public class TrainDetailsDto {
     private String fromLocation;
     private String toLocation;
     private Double fare;
+
+
     public String getTrainId() {
         return trainId;
     }
