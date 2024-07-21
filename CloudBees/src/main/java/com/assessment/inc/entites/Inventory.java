@@ -24,7 +24,7 @@ public class Inventory {
     @Id
     private LocalDate date;
 
-    // Other fields
+
     private Integer seats;
     private Integer avaliableSeats;
     private Double fare;
