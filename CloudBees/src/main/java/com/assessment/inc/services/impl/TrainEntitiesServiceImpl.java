@@ -34,8 +34,8 @@ public class TrainEntitiesServiceImpl implements TrainEntitiesService {
 
         for (TrainEntityDto inventory : inventories) {
 
-            TrainDetails TtainDetail = mappingService.mapToTrainDetailsDto(inventory);
-            trainDetails.add(TtainDetail);
+            TrainDetails trainDetail = mappingService.mapToTrainDetailsDto(inventory);
+            trainDetails.add(trainDetail);
 
             Inventory trainInventory = mappingService.mapToTrainInventoryDto(inventory);
             inventoryList.add(trainInventory);

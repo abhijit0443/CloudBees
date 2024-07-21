@@ -29,7 +29,7 @@ public class TrainMappingService {
         trainInventoryDto.setToLocation(trainEntityDto.getToLocation());
         trainInventoryDto.setSeats(trainEntityDto.getSeats());
         trainInventoryDto.setFare(trainEntityDto.getFare());
-        trainInventoryDto.setAvaliableSeats(trainEntityDto.getSeats()); // You can set this value based on actual logic
+        trainInventoryDto.setAvaliableSeats(trainEntityDto.getSeats());
         return trainInventoryDto;
     }
 }

@@ -2,8 +2,7 @@ package com.assessment.inc.entites;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Objects;
+
 
 public class TrainKey implements Serializable {
 
@@ -45,6 +44,4 @@ public class TrainKey implements Serializable {
     }
 
 
-    // Constructors, getters, setters, equals, and hashCode methods
-    // Ensure to implement equals and hashCode methods correctly for composite keys
 }

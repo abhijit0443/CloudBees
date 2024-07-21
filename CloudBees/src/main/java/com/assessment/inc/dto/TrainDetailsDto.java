@@ -60,4 +60,6 @@ public class TrainDetailsDto {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+
 }

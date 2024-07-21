@@ -96,6 +96,6 @@ public class Inventory {
         this.date = date;
     }
 
-    // Constructors, getters, setters, equals, and hashCode methods
+
 }
 

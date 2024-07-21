@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface TrainDetailsRepository extends JpaRepository<TrainDetails, TrainKey> {
-    List<TrainDetails> findByFromLocationAndToLocationAndDateAfter(String fromLocation, String toLocation, LocalDate date);;
+    List<TrainDetails> findByFromLocationAndToLocationAndDateAfter(String fromLocation, String toLocation, LocalDate date);
     List<TrainDetails> findByTrainId(String trainId);
     void deleteByTrainId(String trainId);
 

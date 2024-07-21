@@ -20,8 +20,6 @@ public class TrainDetails implements Serializable {
     private Double fare;
     private Integer availableSeats;
 
-    // Constructors (default and parameterized), getters, and setters
-    // Omitted for brevity, but you should include them in your class
 
 
     public String getTrainId() {

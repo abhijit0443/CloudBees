@@ -22,7 +22,6 @@ public class TrainDetailsServiceImpl implements TrainDetailsService {
     @Override
     @Transactional
     public List<TrainDetails> saveTrainDetails(List<TrainDetails> trainDetails) {
-        System.out.println("-----------------saveTrainDetails---------->>>>");
         List<TrainDetails> savedTrainDetails = new ArrayList<>();
         for (TrainDetails trainDetail : trainDetails) {
             TrainDetails savedTrainDetail = trainDetailsRepository.save(trainDetail);
@@ -68,5 +67,5 @@ public class TrainDetailsServiceImpl implements TrainDetailsService {
         return trainDetailsRepository.findByTrainIdAndDate(trainId,date);
     }
 
-    // Add more methods as needed for your application
+    
 }
