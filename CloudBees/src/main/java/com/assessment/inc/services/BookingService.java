@@ -23,4 +23,6 @@ public interface BookingService {
     void cancelTicket(String ticketId) throws TicketCancellationException;
 
     Ticket modifySeat(String ticketId, int newSeatNumber);
+
+    List<Ticket> getUserDetailsBySecAndByTrainId(String section, String trainId);
 }

@@ -16,4 +16,6 @@ public interface UserService {
     User getCustomer(String userId);
 
     void removeUser(String ticketId);
+
+    User getCustomerByEmail(String email);
 }

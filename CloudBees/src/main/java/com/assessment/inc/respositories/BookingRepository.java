@@ -13,4 +13,5 @@ public interface BookingRepository extends JpaRepository<Ticket, TrainKey> {
     Optional<Ticket> findByTicketId(String ticketId);
     List<Ticket> findByTrainId(String trainId);
 
+    List<Ticket> findBySectionAndTrainId(String section, String trainId);
 }

@@ -10,6 +10,7 @@ import com.assessment.inc.respositories.BookingRepository;
 import com.assessment.inc.services.BookingService;
 import com.assessment.inc.services.InventoryService;
 import com.assessment.inc.services.TrainDetailsService;
+import com.assessment.inc.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,14 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final InventoryService inventoryService;
     private final TrainDetailsService trainDetailsService;
+    private final UserService userService;
 
     @Autowired
-    public BookingServiceImpl(BookingRepository bookingRepository, InventoryService inventoryService, TrainDetailsService trainDetailsService) {
+    public BookingServiceImpl(BookingRepository bookingRepository, InventoryService inventoryService, TrainDetailsService trainDetailsService,UserService userService) {
         this.bookingRepository = bookingRepository;
         this.inventoryService = inventoryService;
         this.trainDetailsService = trainDetailsService;
+        this.userService=userService;
     }
 
     @Override
@@ -76,7 +79,7 @@ public class BookingServiceImpl implements BookingService {
 
         if (inventory == null) {
             logger.error("Train with ID {} not found", trainId);
-            throw new IllegalArgumentException(String.format("Train with ID %s not found", trainId));
+            throw new ResourceNotFoundException(String.format("Train with ID %s not found", trainId));
         }
 
         if (inventory.getSeats() <= 0 || inventory.getAvaliableSeats() <= 0) {
@@ -84,7 +87,7 @@ public class BookingServiceImpl implements BookingService {
             throw new ExceededCapacityException("Train " + trainId + " is fully booked");
         }
 
-        Ticket ticket = getTicket(fromLocation, toLocation, trainId, date, firstName, lastName, emailAddress, inventory);
+        Ticket ticket = getTicket( firstName, lastName, emailAddress, inventory);
         bookingRepository.save(ticket);
 
         inventory.setAvaliableSeats(inventory.getAvaliableSeats() - 1);
@@ -97,14 +100,14 @@ public class BookingServiceImpl implements BookingService {
         return ticket;
     }
 
-    private Ticket getTicket(String fromLocation, String toLocation, String trainId, LocalDate date, String firstName, String lastName, String emailAddress, Inventory inventory) {
+    private Ticket getTicket( String firstName, String lastName, String emailAddress, Inventory inventory) {
         Ticket ticket = new Ticket();
         ticket.setTicketId(String.valueOf(UUID.randomUUID()));
-        ticket.setTrainId(trainId);
+        ticket.setTrainId(inventory.getTrainId());
         ticket.setTrainName(inventory.getTrainName());
-        ticket.setDate(date);
-        ticket.setFromLocation(fromLocation);
-        ticket.setToLocation(toLocation);
+        ticket.setDate(inventory.getDate());
+        ticket.setFromLocation(inventory.getFromLocation());
+        ticket.setToLocation(inventory.getToLocation());
         ticket.setFirstName(firstName);
         ticket.setLastName(lastName);
         ticket.setEmail(emailAddress);
@@ -127,13 +130,24 @@ public class BookingServiceImpl implements BookingService {
     public Ticket getTicket(String ticketId) {
         logger.info("Fetching ticket details for ticket ID: {}", ticketId);
         Optional<Ticket> optionalTicket = bookingRepository.findByTicketId(ticketId);
-        return optionalTicket.orElse(null);
+        if (optionalTicket.isPresent()) {
+            return optionalTicket.get();
+        } else {
+            logger.error("Ticket with ID {} not found", ticketId);
+            throw new ResourceNotFoundException("Ticket with ID " + ticketId + " not found");
+        }
     }
 
     @Override
     public List<Ticket> getTicketsByEmail(String emailAddress) {
         logger.info("Fetching tickets for email address: {}", emailAddress);
-        return bookingRepository.findByEmail(emailAddress);
+        List<Ticket>  tickets= bookingRepository.findByEmail(emailAddress);
+        if (tickets.size()>0) {
+            return tickets;
+        }else{
+            logger.error("Ticket with Email id  {} not found", emailAddress);
+            throw new ResourceNotFoundException("Ticket with Email id " + emailAddress + " not found");
+        }
     }
 
     @Override
@@ -148,6 +162,20 @@ public class BookingServiceImpl implements BookingService {
         } else {
             logger.error("Ticket with ID {} not found", ticketId);
             throw new ResourceNotFoundException("Ticket with ID " + ticketId + " not found");
+        }
+    }
+
+    @Override
+    public  List<Ticket> getUserDetailsBySecAndByTrainId(String section, String trainId) {
+        List<Ticket>  tickets= bookingRepository.findBySectionAndTrainId(section,trainId);
+        if (tickets.size()>0) {
+            /*for(int index =0;index<tickets.size();index++) {
+                userService.getCustomerByEmail(tickets.get(index).getEmail());
+            }*/
+            return tickets;
+        }else{
+            logger.error("User details with section {} and trainId {} not found", section,trainId);
+            throw new ResourceNotFoundException("User details with section "+section+" and "+trainId +"not found");
         }
     }
 }

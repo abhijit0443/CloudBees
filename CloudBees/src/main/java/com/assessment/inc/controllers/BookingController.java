@@ -6,6 +6,7 @@ import com.assessment.inc.entites.TrainDetails;
 import com.assessment.inc.exceptions.ExceededCapacityException;
 import com.assessment.inc.exceptions.TicketCancellationException;
 import com.assessment.inc.services.BookingService;
+import com.assessment.inc.services.UserService;
 import com.assessment.inc.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,10 @@ public class BookingController {
     private final  BookingService bookingService;
     public BookingController(BookingService bookingService){
         this.bookingService=bookingService;
+
     }
     @GetMapping(Constants.API_TRAIN_BY_ID)
-    public List<TrainDetails> findByTrainId(@PathVariable String trainId) {
+    public List<TrainDetails> findByTrainId(@PathVariable @NotBlank(message = Constants.TRAIN_ID_REQUIRED) String trainId) {
         logger.info("Fetching train details for trainId: {}", trainId);
         return bookingService.findByTrainId(trainId);
 
@@ -65,6 +67,22 @@ public class BookingController {
     public Ticket getReceiptDetails(@PathVariable @NotBlank(message = Constants.TICKET_ID_NOT_BLANK) String ticketId) {
         logger.info("Fetching receipt details for ticketId: {}", ticketId);
         return bookingService.getTicket(ticketId);
+    }
+
+    /*An API that shows the details of the receipt for the user*/
+    @GetMapping(Constants.API_USER_DETAILS_BY_SEC)
+    public List<Ticket> getLisOfUserDetailsByTrainSection(@RequestParam @NotBlank(message = Constants.SECTION_NOT_REQUIRED) String section,@RequestParam @NotBlank(message = Constants.TRAIN_ID_REQUIRED)String trainId) {
+        logger.info("Fetching receipt details for section {} and trainid {}", section,trainId);
+        List<Ticket>  tickets = bookingService.getUserDetailsBySecAndByTrainId(section,trainId);
+        return tickets;
+    }
+
+    /*An API that shows the details of the receipt for the user*/
+    @GetMapping(Constants.API_TRAIN_BY_EMAIL_ID)
+    public List<Ticket> getTicketsByEmail(@PathVariable @NotBlank(message = Constants.EMAIL_ID_NOT_BLANK) String email) {
+        logger.info("Fetching receipt details for Email ID: {}", email);
+        return bookingService.getTicketsByEmail(email);
+      //  return ResponseEntity.ok().body(modifiedTicket);
     }
     @PutMapping(Constants.API_MODIFY_SEAT)
     public ResponseEntity<Ticket> modifySeat(
