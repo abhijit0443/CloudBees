@@ -4,6 +4,7 @@ import com.assessment.inc.entites.Inventory;
 import com.assessment.inc.entites.Ticket;
 import com.assessment.inc.entites.TrainDetails;
 import com.assessment.inc.exceptions.ExceededCapacityException;
+import com.assessment.inc.exceptions.PastDateException;
 import com.assessment.inc.exceptions.ResourceNotFoundException;
 import com.assessment.inc.exceptions.TicketCancellationException;
 import com.assessment.inc.respositories.BookingRepository;
@@ -74,6 +75,10 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public Ticket bookTicket(String fromLocation, String toLocation, String trainId, LocalDate date, String firstName, String lastName, String emailAddress) throws ExceededCapacityException {
         logger.info("Booking ticket for train ID: {} from {} to {} on {}", trainId, fromLocation, toLocation, date);
+        if (date.isBefore(LocalDate.now())) {
+            throw new PastDateException(String.format("Train cannot be booked for past date: %s", date));
+        }
+
         Inventory inventory = inventoryService.findByTrainIdAndDate(trainId, date);
         TrainDetails trainDetail = trainDetailsService.findByTrainIdAndDate(trainId, date);
 
@@ -178,4 +183,8 @@ public class BookingServiceImpl implements BookingService {
             throw new ResourceNotFoundException("User details with section "+section+" and "+trainId +"not found");
         }
     }
+
+  /*  public List<Ticket> getAllBookingsForUser(String email) {
+        return bookingRepository.findAllBookingsForUser(email);
+    }*/
 }

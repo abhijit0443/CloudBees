@@ -16,7 +16,7 @@ public interface BookingService {
     Ticket getTicket(String ticketId) ;
 
    // List<Ticket> getUsersBySection(String section) ;
-    List<TrainDetails> findByTrainId(String trainId);
+     List<TrainDetails> findByTrainId(String trainId);
 
      List<Ticket> getTicketsByEmail(String emailAddress);
 
@@ -25,4 +25,6 @@ public interface BookingService {
     Ticket modifySeat(String ticketId, int newSeatNumber);
 
     List<Ticket> getUserDetailsBySecAndByTrainId(String section, String trainId);
+
+   /* List<Ticket> getAllBookingsForUser(String email);*/
 }

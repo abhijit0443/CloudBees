@@ -77,12 +77,23 @@ public class BookingController {
         return tickets;
     }
 
+ /*   @GetMapping("/allUserBook/{email}")
+    public List<Ticket> getAllBookingsForUser(@PathVariable @NotBlank(message = Constants.SECTION_NOT_REQUIRED) String email) {
+
+        List<Ticket>  tickets = bookingService.getAllBookingsForUser(email);
+        return tickets;
+    }*/
+
+
+
+
+
     /*An API that shows the details of the receipt for the user*/
     @GetMapping(Constants.API_TRAIN_BY_EMAIL_ID)
     public List<Ticket> getTicketsByEmail(@PathVariable @NotBlank(message = Constants.EMAIL_ID_NOT_BLANK) String email) {
         logger.info("Fetching receipt details for Email ID: {}", email);
         return bookingService.getTicketsByEmail(email);
-      //  return ResponseEntity.ok().body(modifiedTicket);
+
     }
     @PutMapping(Constants.API_MODIFY_SEAT)
     public ResponseEntity<Ticket> modifySeat(
@@ -93,5 +104,8 @@ public class BookingController {
         Ticket modifiedTicket = bookingService.modifySeat(ticketId, newSeatNumber);
         return ResponseEntity.ok().body(modifiedTicket);
     }
+
+
+
 
 }

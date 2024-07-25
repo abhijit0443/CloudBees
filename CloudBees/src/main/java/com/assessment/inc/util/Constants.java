@@ -32,7 +32,7 @@ public class Constants {
     public static final String EMAIL_REQUIRED = "Email address is required";
 
     public static final String API_BASE_PATH = "/api/v1/trains";
-    public static final String API_TRAIN_BY_ID = "/trainById/{trainId}";
+    public static final String API_TRAIN_BY_ID = "/train/{trainId}";
     public static final String API_TRAIN_BY_TICKET_ID = "/ticket/{ticketId}";
     public static final String API_TRAIN_BY_EMAIL_ID = "/email/{email}";
     public static final String API_BOOK_TICKET = "/book";

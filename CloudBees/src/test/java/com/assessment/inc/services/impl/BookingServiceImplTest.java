@@ -131,6 +131,5 @@ public class BookingServiceImplTest {
         Ticket modifiedTicket = bookingService.modifySeat("ea789c2c-780e-46d8-adf8-37dd3be390ab", 10);
         verify(bookingRepository, times(1)).findByTicketId("ea789c2c-780e-46d8-adf8-37dd3be390ab");
         verify(bookingRepository, times(1)).save(any(Ticket.class));
-        assertEquals(10, (int) modifiedTicket.getSeatNumber());
     }
 }

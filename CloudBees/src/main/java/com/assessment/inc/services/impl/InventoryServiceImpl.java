@@ -36,11 +36,11 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-        public List<Inventory> getByFromLocationAndToLocation(String fromLocation, String toLocation) {
+   public List<Inventory> getByFromLocationAndToLocation(String fromLocation, String toLocation) {
 
             LocalDate currentDate = LocalDate.now(); // Example: Current date
             return inventoryRepository.findByFromLocationAndToLocationAndDateAfter(fromLocation, toLocation, currentDate);
-          }
+     }
     @Override
     public List<Inventory> getAllInventories() {
         return inventoryRepository.findAll();

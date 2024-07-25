@@ -65,7 +65,7 @@ public class CustomerControllerTest {
     @Test
     public void testAddCustomersDataIntegrityViolationException() {
         when(userService.saveCustomers(anyList())).thenThrow(new org.springframework.dao.DataIntegrityViolationException("Data integrity violation"));
-          ResponseEntity<?> responseEntity = customerController.addCustomers(mockUsers);
+        ResponseEntity<?> responseEntity = customerController.addCustomers(mockUsers);
         assertEquals(HttpStatus.CONFLICT, responseEntity.getStatusCode());
         assertEquals(Constants.DATABASE_ERROR, responseEntity.getBody());
         verify(userService, times(1)).saveCustomers(mockUsers);

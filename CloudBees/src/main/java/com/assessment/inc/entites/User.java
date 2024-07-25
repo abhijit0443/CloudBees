@@ -5,11 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -33,5 +33,17 @@ User {
 
     @NotBlank(message = "Phone number is required")
     private String phone;
+
+/*
+    @OneToMany(fetch=FetchType.LAZY)
+    @JoinColumn(name = "email", referencedColumnName = "email")
+    private List<Ticket> tickets = new ArrayList<>();
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }*/
 
 }

@@ -42,6 +42,13 @@ public class GlobalExceptionHandler {
         response.put("success", false);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
-
+    @ExceptionHandler(PastDateException.class)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> pastDateException(PastDateException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("success", false);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 
 }
